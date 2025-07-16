@@ -9,7 +9,13 @@ import { inngest, functions } from "./inngest/index.js"
 const app = express();
 const port = 3000;
 
-await connectDB();
+try {
+    await connectDB();
+    console.log("Connected to DB ✅");
+} catch (error) {
+    console.error("❌ DB Error:", error.message);
+}
+
 
 // Middleware
 app.use(express.json())
@@ -18,11 +24,16 @@ app.use(clerkMiddleware())
 
 // API Routes
 app.get('/', (req, res) => res.send('Server is Live!'))
-app.use('/api/inngest', serve({ client: inngest, functions }))
+//app.use('/api/inngest', serve({ client: inngest, functions }))
 // app.use('/api/show', showRouter)
 // app.use('/api/booking', bookingRouter)
 // app.use('/api/admin', adminRouter)
 // app.use('/api/user', userRouter)
+
+app.get("/test", (req, res) => {
+    res.send("Server is working!");
+});
+
 
 
 app.listen(port, () => console.log(`Server listening at http://localhost:${port}`));
