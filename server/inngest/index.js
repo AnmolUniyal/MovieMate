@@ -35,7 +35,7 @@ const syncUserDeletion = inngest.createFunction(
     }
 )
 
-// Inngest Function to update user data in database 
+// Inngest Function to update user data in database
 const syncUserUpdation = inngest.createFunction(
     { id: 'update-user-from-clerk' },
     { event: 'clerk/user.updated' },
@@ -159,7 +159,7 @@ const sendShowReminders = inngest.createFunction(
                             <p>This is a quick reminder that your movie:</p>
                             <h3 style="color: #F84565;">"${task.movieTitle}"</h3>
                             <p>
-                                is scheduled for <strong>${new Date(task.showTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</strong> at 
+                                is scheduled for <strong>${new Date(task.showTime).toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata' })}</strong> at
                                 <strong>${new Date(task.showTime).toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata' })}</strong>.
                             </p>
                             <p>It starts in approximately <strong>8 hours</strong> - make sure you're ready!</p>
