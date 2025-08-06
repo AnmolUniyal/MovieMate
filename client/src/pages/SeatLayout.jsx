@@ -6,7 +6,7 @@ import { ArrowRightIcon, ClockIcon } from "lucide-react";
 import isoTimeFormat from "../lib/isoTimeFormat";
 import BlurCircle from "../components/BlurCircle";
 import toast from "react-hot-toast";
-//import { useAppContext } from '../context/AppContext'
+import { useAppContext } from "../context/AppContext";
 
 const SeatLayout = () => {
   const groupRows = [
@@ -25,23 +25,16 @@ const SeatLayout = () => {
 
   const navigate = useNavigate();
 
-  //const {axios, getToken, user} = useAppContext();
+  const { axios, getToken, user } = useAppContext();
 
   const getShow = async () => {
-    // try {
-    //   const { data } = await axios.get(`/api/show/${id}`);
-    //   if (data.success) {
-    //     setShow(data);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    const show = dummyShowsData.find((show) => show._id === id);
-    if (show) {
-      setShow({
-        movie: show,
-        dateTime: dummyDateTimeData,
-      });
+    try {
+      const { data } = await axios.get(`/api/show/${id}`);
+      if (data.success) {
+        setShow(data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -75,7 +68,7 @@ const SeatLayout = () => {
                          ${
                            selectedSeats.includes(seatId) &&
                            "bg-primary text-white"
-                         }
+                         } 
                          ${occupiedSeats.includes(seatId) && "opacity-50"}`}
             >
               {seatId}
@@ -86,20 +79,20 @@ const SeatLayout = () => {
     </div>
   );
 
-  // const getOccupiedSeats = async () => {
-  //   try {
-  //     const { data } = await axios.get(
-  //       `/api/booking/seats/${selectedTime.showId}`
-  //     );
-  //     if (data.success) {
-  //       setOccupiedSeats(data.occupiedSeats);
-  //     } else {
-  //       toast.error(data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getOccupiedSeats = async () => {
+    try {
+      const { data } = await axios.get(
+        `/api/booking/seats/${selectedTime.showId}`
+      );
+      if (data.success) {
+        setOccupiedSeats(data.occupiedSeats);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const bookTickets = async () => {
     try {
@@ -128,11 +121,11 @@ const SeatLayout = () => {
     getShow();
   }, []);
 
-  // useEffect(() => {
-  //   if (selectedTime) {
-  //     getOccupiedSeats();
-  //   }
-  // }, [selectedTime]);
+  useEffect(() => {
+    if (selectedTime) {
+      getOccupiedSeats();
+    }
+  }, [selectedTime]);
 
   return show ? (
     <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">

@@ -14,15 +14,15 @@ import Dashboard from "./pages/admin/DashBoard";
 import AddShows from "./pages/admin/AddShows";
 import ListShows from "./pages/admin/ListShows";
 import ListBookings from "./pages/admin/ListBookings";
-//import { useAppContext } from "./context/AppContext";
+import { useAppContext } from "./context/AppContext";
 import { SignIn } from "@clerk/clerk-react";
 import Layout from "./pages/admin/Layout";
-//import Loading from "./components/Loading";
+import Loading from "./components/Loading";
 
 const App = () => {
   const isAdminRoute = useLocation().pathname.startsWith("/admin");
 
-  //const { user } = useAppContext();
+  const { user } = useAppContext();
 
   return (
     <>
@@ -34,20 +34,20 @@ const App = () => {
         <Route path="/movies/:id" element={<MovieDetails />} />
         <Route path="/movies/:id/:date" element={<SeatLayout />} />
         <Route path="/my-bookings" element={<MyBookings />} />
-        {/* <Route path="/loading/:nextUrl" element={<Loading />} /> */}
+        <Route path="/loading/:nextUrl" element={<Loading />} />
 
         <Route path="/favourite" element={<Favourite />} />
+
         <Route
           path="/admin/*"
           element={
-            // user ? (
-            //   <Layout />
-            // ) : (
-            //   <div className="min-h-screen flex justify-center items-center">
-            //     <SignIn fallbackRedirectUrl={"/admin"} />
-            //   </div>
-            // )
-            <Layout />
+            user ? (
+              <Layout />
+            ) : (
+              <div className="min-h-screen flex justify-center items-center">
+                <SignIn fallbackRedirectUrl={"/admin"} />
+              </div>
+            )
           }
         >
           <Route index element={<Dashboard />} />
