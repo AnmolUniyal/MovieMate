@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import AdminNavbar from "../../components/admin/AdminNavbar";
+import AdminNavbar from "../../components/admin/AdminNavBar";
 import AdminSidebar1 from "../../components/admin/AdminSideBar1";
 import { Outlet } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
